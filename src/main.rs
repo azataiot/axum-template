@@ -1,7 +1,6 @@
 // main.rs
 
 mod config;
-mod web;
 use axum_template::app;
 
 #[tokio::main]
