@@ -23,7 +23,9 @@ async fn health_returns_ok_true() {
     assert_eq!(response.status(), StatusCode::OK);
 
     // axum 0.8 to_bytes requires a body size limit; health response is tiny
-    let bytes = to_bytes(response.into_body(), 1024).await.expect("read body");
+    let bytes = to_bytes(response.into_body(), 1024)
+        .await
+        .expect("read body");
     let json: serde_json::Value = serde_json::from_slice(&bytes).expect("json");
     assert_eq!(json, serde_json::json!({ "ok": true }));
 }
