@@ -1,1 +1,1 @@
-# rust-axum-template
+# axum-template
