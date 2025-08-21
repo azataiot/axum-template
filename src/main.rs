@@ -1,7 +1,8 @@
 // main.rs
 
-use axum::Router;
+use axum::extract::{Json, Path, Query};
 use axum::routing::get;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -31,3 +32,15 @@ async fn post_foo() -> &'static str {
 async fn foo_bar() -> &'static str {
     "foo/bar"
 }
+
+// Extractors
+// `Path` gives you the path parameters and deserializes them.
+async fn path(Path(user_id): Path<u32>) {}
+
+// `Query` gives you the query parameters and deserializes them.
+async fn query(Query(params): Query<HashMap<String, String>>) {}
+
+// Buffer the request body and deserialize it as JSON into a
+// `serde_json::Value`. `Json` supports any type that implements
+// `serde::Deserialize`.
+async fn json(Json(payload): Json<serde_json::Value>) {}
