@@ -2,6 +2,9 @@
 
 ## Introduction
 
+Rust is a performant, safe, reliable, efficient and productive programming language. Almost*
+all [AzatAI](https://azat.ai) projects
+starting from July 2025 are built with Rust.
 Installing rust:
 
 - Ref: https://www.rust-lang.org/tools/install
