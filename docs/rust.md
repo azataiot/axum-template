@@ -121,4 +121,79 @@ Note:
 - Immutable borrow: `&T`
 - Mutable borrow: `&mut T`
 - Borrowing rules: There can be only one mutable reference or multiple immutable references at a time
-- Lifetimes: `'a`, assure that the borrowed value is valid for the lifetime `'a`. 
+- Lifetimes: `'a`, assure that the borrowed value is valid for the lifetime `'a`.
+
+```rust
+#[derive(Debug)]
+struct EnhancedQueryParser<'a> {
+    query: &'a str,
+    params: HashMap<&'a str, &'a str>
+}
+
+impl<'a> EnhancedQueryParser<'a> {
+    fn from_string(query: &'a str) -> Self {
+        let params: HashMap<&'a str, &'a str>  = query.split("&")
+            .map(|kv| {
+                let mut parts = kv.split("=");
+                (
+                    parts.next().unwrap(),
+                    parts.next().unwrap()
+                )
+            })
+            .collect();
+        
+        Self {
+            query,
+            params
+        }
+    }
+}
+
+fn main() {
+    let qp2 = EnhancedQueryParser::from_string(&query);
+    println!("params: {:#?}", qp2);
+    let name = qp2.params.get("name").unwrap();
+    println!("name: {}", name);
+}
+```
+
+### Traits
+
+Define a trait:
+
+```rust
+trait Summary {
+    fn summarize(&self) -> String;
+    fn default_behavior(&self) -> String {
+        String::from("default behavior")
+    }
+}
+```
+
+Implement a trait for a type:
+
+```rust
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {}", self.headline, self.author)
+    }
+}
+```
+
+Constraints:
+
+```rust
+fn notify<T: Summary>(item: &T) { ... } 
+
+fn notify<T: Summary + Display>(item: &T) { ... }
+```
+
+Trait with where clause:
+
+```rust
+fn some_function<T, U>(t: &T, u: &U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+{ ... }
+```
+

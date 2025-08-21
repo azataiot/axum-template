@@ -1,22 +1,11 @@
+use std::collections::HashMap;
+
 fn main() {
-    #[derive(Debug)]
-    struct User {
-        id: String,
-        name: String,
-        gender: Gender,
+    trait Person {
+        fn get_name(&self) -> String;
+        fn get_age(&self) -> i32;
+        fn say(&self) {
+            println!("Hello, {}", self.get_name());
+        }
     }
-
-    #[derive(Debug)]
-    enum Gender {
-        MALE,
-        FEMALE,
-    }
-
-    let user = User {
-        id: String::from("1"),
-        name: "John".to_string(),
-        gender: Gender::MALE,
-    };
-
-    println!("{:#?}", user)
 }
