@@ -1,0 +1,15 @@
+meta {
+  name: /foo
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}/foo
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
